@@ -17,7 +17,7 @@ var EnvListenAddress = "SRV_LISTEN_ADDRESS"
 func StartServer(httpserver *http.Server) (err error) {
 
 	go func() {
-		logrus.Info("http server listening on %s", httpserver.Addr)
+		logrus.Infof("http server listening on %s", httpserver.Addr)
 		if httpserver.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			logrus.Panic(err)
 		}
