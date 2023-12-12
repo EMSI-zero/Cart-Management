@@ -1,6 +1,7 @@
 package boot
 
 import (
+	"cart-manager/infra/dbrepo"
 	"flag"
 	"fmt"
 	"io"
@@ -24,6 +25,10 @@ func Boot() error {
 	}
 
 	if err := InitLog(env_dir_flag); err != nil {
+		return err
+	}
+
+	if err := dbrepo.NewDBConn(); err != nil {
 		return err
 	}
 	return nil
