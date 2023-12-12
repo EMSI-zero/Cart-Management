@@ -4,7 +4,7 @@ import "cart-manager/domain/user"
 
 type ServiceRegistry interface {
 	mustImplementBaseRegistry()
-	RegisterUserService(string, user.UserService)
+	RegisterUserService(user.UserService)
 	GetUserService() user.UserService
 }
 
