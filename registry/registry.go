@@ -12,7 +12,7 @@ type serviceRegistry struct {
 	services ServiceMap
 }
 
-func mustImplementBaseRegistry() {}
+func (sr *serviceRegistry) mustImplementBaseRegistry() {}
 
 type ServiceMap struct {
 	UserServices user.UserService
@@ -27,4 +27,8 @@ func NewServiceRegistry() *serviceRegistry {
 
 func (sr *serviceRegistry) RegisterUserService(service user.UserService) {
 	sr.services.UserServices = service
+}
+
+func (sr *serviceRegistry) GetUserService() user.UserService {
+	return sr.services.UserServices
 }

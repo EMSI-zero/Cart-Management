@@ -2,6 +2,8 @@ package boot
 
 import (
 	"cart-manager/infra/dbrepo"
+	"cart-manager/registry"
+	"cart-manager/services"
 	"flag"
 	"fmt"
 	"io"
@@ -29,6 +31,15 @@ func Boot() error {
 	}
 
 	if err := dbrepo.NewDBConn(); err != nil {
+		return err
+	}
+
+	r := registry.NewServiceRegistry()
+	if r == nil {
+		return fmt.Errorf("problem initiating service registry")
+	}
+
+	if err := services.InitServices(r); err != nil {
 		return err
 	}
 	return nil
