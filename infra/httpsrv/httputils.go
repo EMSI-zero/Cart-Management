@@ -1,7 +1,6 @@
-package httpserver
+package httpsrv
 
 import (
-	"cart-manager/gateway"
 	"context"
 	"fmt"
 	"net/http"
@@ -10,25 +9,15 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
 var EnvListenAddress = "SRV_LISTEN_ADDRESS"
 
-func StartServer() error {
-	engine := gin.Default()
-	// gin.SetMode(gin.ReleaseMode)
-	gateway.AddRoutes(engine)
+func StartServer(httpserver *http.Server) (err error) {
 
-	address, err := GetListenAddressEnv()
-	if err != nil {
-		return err
-	}
-
-	httpserver := &http.Server{Addr: address, Handler: engine}
 	go func() {
-		logrus.Info("http server listening on %s", address)
+		logrus.Info("http server listening on %s", httpserver.Addr)
 		if httpserver.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			logrus.Panic(err)
 		}
